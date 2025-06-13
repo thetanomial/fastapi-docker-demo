@@ -26,3 +26,14 @@ jobs:
     - name: Test if app starts
       run: |
         python -c "from main import app; print('App imported successfully!')"
+    
+    - name: Build Docker image
+      run: |
+        docker build -t my-fastapi-app .
+    
+    - name: Test Docker container
+      run: |
+        docker run -d -p 8000:8000 --name test-container my-fastapi-app
+        sleep 5
+        curl -f http://localhost:8000/health || exit 1
+        docker stop test-container
