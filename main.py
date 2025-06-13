@@ -13,3 +13,7 @@ def health_check():
 @app.get("/version")
 def get_version():
     return {"version": "2.0", "deployed_via": "github_actions"}
+
+@app.get("/new-endpoint")
+def get_version():
+    return {"message": "this is my new endpoint.", "extra": "I am testing via CI/CD"}
