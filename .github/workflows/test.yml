@@ -50,13 +50,13 @@ jobs:
     
     - name: Deploy to DigitalOcean Droplet
       if: github.ref == 'refs/heads/main'
-      run: |
-        echo "${{ secrets.DEPLOY_KEY }}" > deploy_key
-        chmod 600 deploy_key
-        ssh -i deploy_key -o StrictHostKeyChecking=no root@${{ secrets.DROPLET_IP }} '
-          docker pull ${{ secrets.DOCKER_USERNAME }}/fastapi-demo:latest &&
-          docker stop fastapi-app || true &&
-          docker rm fastapi-app || true &&
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.DROPLET_IP }}
+        username: root
+        password: ${{ secrets.DROPLET_PASSWORD }}
+        script: |
+          docker pull ${{ secrets.DOCKER_USERNAME }}/fastapi-demo:latest
+          docker stop fastapi-app || true
+          docker rm fastapi-app || true
           docker run -d -p 80:8000 --name fastapi-app ${{ secrets.DOCKER_USERNAME }}/fastapi-demo:latest
-        '
-        rm deploy_key
