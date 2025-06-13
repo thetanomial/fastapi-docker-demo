@@ -31,4 +31,8 @@ def get_version_two():
 def get_version_three():
     return {"message": "this is my new endpoint.", "extra": "I am testing via CI/CD"}
 
+@app.get("/hello-amit")
+def get_version_hello_amit():
+    return {"message": "this is my new endpoint.", "extra": "I am testing via CI/CD"}
+
 
