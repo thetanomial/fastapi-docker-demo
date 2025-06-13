@@ -27,4 +27,8 @@ def get_version_one():
 def get_version_two():
     return {"message": "this is my new endpoint.", "extra": "I am testing via CI/CD"}
 
+@app.get("/new-endpoint-three")
+def get_version_three():
+    return {"message": "this is my new endpoint.", "extra": "I am testing via CI/CD"}
+
 
